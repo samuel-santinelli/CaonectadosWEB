@@ -1,7 +1,7 @@
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 import { theme } from "./theme";
-import { DefaultLayout } from "./layout/DefaultLayout";
+import { DefaultLayout } from "./layout/DefaultLayout/DefaultLayout";
 
 export default function App() {
   return (
