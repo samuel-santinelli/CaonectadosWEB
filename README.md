@@ -1,5 +1,3 @@
-Aqui está um exemplo de `README.md` para um projeto React utilizando Vite:
-
 ```markdown
 # Cãonectados
 
