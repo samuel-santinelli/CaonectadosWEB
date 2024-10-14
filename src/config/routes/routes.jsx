@@ -5,7 +5,7 @@ const defineRoutes = async () => {
   const routes = [
     {
       path: "*",
-      name: "Dashboard View",
+      name: "Default View",
       element: <DefaultLayout />,
     },
     {
