@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { MantineProvider } from "@mantine/core";
 import { useHotkeys, useLocalStorage } from "@mantine/hooks";
-import { Notifications } from "@mantine/notifications";
+// import { Notifications } from "@mantine/notifications";
 
 export function Main() {
   const [colorScheme, setColorScheme] = useLocalStorage({
@@ -23,7 +23,7 @@ export function Main() {
         withGlobalStyles
         withNormalizeCSS
       >
-        <Notifications />
+        {/* <Notifications /> */}
         <App />
       </MantineProvider>
 
