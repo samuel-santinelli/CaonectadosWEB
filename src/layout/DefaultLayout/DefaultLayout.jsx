@@ -1,42 +1,68 @@
 import { AppShell, Burger, Group, UnstyledButton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import classes from './MobileNavbar.module.css';
+import classes from "./MobileNavbar.module.css";
+import DiscountHeaderLayout from "../DiscountHeader/DiscountHeaderLayout";
+import HeaderLayout from "../Header/Header";
+import Content from "../Content";
 
 export function DefaultLayout() {
   const [opened, { toggle }] = useDisclosure();
 
   return (
     <AppShell
-    header={{ height: 60 }}
-    navbar={{ width: 300, breakpoint: 'sm', collapsed: { desktop: true, mobile: !opened } }}
-    padding="md"
-  >
-    <AppShell.Header>
-      <Group h="100%" px="md">
-        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-        <Group justify="space-between" style={{ flex: 1 }}>
-          {/* <MantineLogo size={30} /> */}
-          <Group ml="xl" gap={0} visibleFrom="sm">
-            <UnstyledButton className={classes.control}>Home</UnstyledButton>
-            <UnstyledButton className={classes.control}>Blog</UnstyledButton>
-            <UnstyledButton className={classes.control}>Contacts</UnstyledButton>
-            <UnstyledButton className={classes.control}>Support</UnstyledButton>
+      header={{ height: 150 }}
+      navbar={{
+        width: 300,
+        breakpoint: "sm",
+        collapsed: { desktop: true, mobile: !opened },
+      }}
+      padding="md"
+    >
+      <AppShell.Header style={{ border: 0}}>
+        <DiscountHeaderLayout />
+        <HeaderLayout />
+        <Group h="100%" px="md" style={{ marginTop: -45, border: 0 }}>
+          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+          <Group justify="center" style={{ flex: 1 }}>
+            {/* <MantineLogo size={30} /> */}
+            <Group ml="xl" gap={0} visibleFrom="sm">
+              <UnstyledButton className={classes.control}>Home</UnstyledButton>
+              <UnstyledButton className={classes.control}>
+                Cadastro de usuários
+              </UnstyledButton>
+              <UnstyledButton className={classes.control}>
+                Cadastro de produtos
+              </UnstyledButton>
+              <UnstyledButton className={classes.control}>
+                Lista de produtos
+              </UnstyledButton>
+              <UnstyledButton className={classes.control}>
+                Lista de usuários
+              </UnstyledButton>
+            </Group>
           </Group>
         </Group>
-      </Group>
-    </AppShell.Header>
+      </AppShell.Header>
 
-    <AppShell.Navbar py="md" px={4}>
-      <UnstyledButton className={classes.control}>Home</UnstyledButton>
-      <UnstyledButton className={classes.control}>Blog</UnstyledButton>
-      <UnstyledButton className={classes.control}>Contacts</UnstyledButton>
-      <UnstyledButton className={classes.control}>Support</UnstyledButton>
-    </AppShell.Navbar>
+      <AppShell.Navbar py="md" px={4}>
+        <UnstyledButton className={classes.control}>Home</UnstyledButton>
+        <UnstyledButton className={classes.control}>
+          Cadastro de usuários
+        </UnstyledButton>
+        <UnstyledButton className={classes.control}>
+          Cadastro de produtos
+        </UnstyledButton>
+        <UnstyledButton className={classes.control}>
+          Lista de produtos
+        </UnstyledButton>
+        <UnstyledButton className={classes.control}>
+          Lista de usuários
+        </UnstyledButton>
+      </AppShell.Navbar>
 
-    <AppShell.Main>
-      Navbar is only visible on mobile, links that are rendered in the header on desktop are
-      hidden on mobile in header and rendered in navbar instead.
-    </AppShell.Main>
-  </AppShell>
+      <AppShell.Main px={0}>
+      <Content/>
+      </AppShell.Main>
+    </AppShell>
   );
 }

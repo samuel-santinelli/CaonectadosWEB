@@ -1,0 +1,14 @@
+.control{
+    padding: 10px;
+    justify-content: center;
+
+}
+
+.actionIcons{
+      
+    @mixin hover {
+        /* background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6)); */
+        color: #FF4C00;
+        transition: 0.5s;
+      }
+}
