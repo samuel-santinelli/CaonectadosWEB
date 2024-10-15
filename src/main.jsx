@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { MantineProvider } from "@mantine/core";
 import { useHotkeys, useLocalStorage } from "@mantine/hooks";
+import "./main.module.css"
 // import { Notifications } from "@mantine/notifications";
 
 export function Main() {

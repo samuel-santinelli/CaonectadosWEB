@@ -1,0 +1,31 @@
+/* Bloqueia a seleção de texto e a cópia de imagem */
+img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    pointer-events: none;
+  }
+  
+/* Bloqueia a seleção de conteúdo no site */
+  body {
+    user-select: none;
+  }
+
+::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+ 
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 10px; 
+  }
+  
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #ff8c00; 
+    border-radius: 10px; 
+    border: 2px solid #f1f1f1; 
+  }
