@@ -6,7 +6,7 @@ import PartnerCard from "../../../components/cards/PartnerCard/PartnerCard";
 
 const PartnerLayout = () => {
   return (
-    <Flex justify={"center"} align={"center"} direction={"column"} gap={30}>
+    <Flex direction={"column"} gap={30} px={50}>
       <Divider
         my="xs"
         label="PARCEIROS"
@@ -14,7 +14,7 @@ const PartnerLayout = () => {
         flex={1}
         px={20}
       />
-      <Flex direction={"row"} gap={50}>
+      <Flex direction={"row"} justify={"center"} align={"center"} gap={50}>
         <PartnerCard image={SyngentaPartner} />
         <PartnerCard image={PetLovePartner} />
         <PartnerCard image={BayerPartner} />

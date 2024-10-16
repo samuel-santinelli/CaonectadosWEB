@@ -4,6 +4,7 @@ import App from "./App";
 import { MantineProvider } from "@mantine/core";
 import { useHotkeys, useLocalStorage } from "@mantine/hooks";
 import "./main.module.css"
+import '@mantine/carousel/styles.css';
 // import { Notifications } from "@mantine/notifications";
 
 export function Main() {

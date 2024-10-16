@@ -4,7 +4,7 @@ import PortionImage from "../../../assets/dashboard/promotion/portion.png";
 
 const PromotionCard = () => {
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder maw={"300px"}>
+    <Card shadow="sm" padding="lg" radius="md" withBorder w={"300px"}>
       <Card.Section component="a">
         <Flex justify={"center"} p={20}>
           <Image

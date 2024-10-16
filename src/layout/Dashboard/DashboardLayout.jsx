@@ -10,6 +10,7 @@ const DashboardLayout = () => {
       <BannerLayout />
       <PromotionLayout />
       <PartnerLayout />
+      <PromotionLayout />
       <FooterComponent />
     </Flex>
   );
