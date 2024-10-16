@@ -55,7 +55,7 @@ const HeaderLayout = () => {
             mah={500}
           >
             {product.map((item, index) => (
-              <Card key={index} withBorder maw={700} mih={200}>
+              <Card key={index} withBorder maw={700} mih={180}>
                 <Flex direction={"row"} gap={"md"}>
                   <Flex
                     direction={"row"}
