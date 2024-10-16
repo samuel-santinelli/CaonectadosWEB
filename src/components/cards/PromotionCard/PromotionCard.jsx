@@ -2,6 +2,7 @@ import { Badge, Button, Card, Flex, Group, Image, Text } from "@mantine/core";
 import { IconShoppingCartPlus } from "@tabler/icons-react";
 
 const PromotionCard = ({
+  key,
   image,
   name,
   description,
@@ -11,6 +12,7 @@ const PromotionCard = ({
 }) => {
   return (
     <Card
+      key={key}
       shadow="sm"
       padding="lg"
       radius="md"
