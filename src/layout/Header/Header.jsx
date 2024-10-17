@@ -123,6 +123,7 @@ const HeaderLayout = () => {
         onClose={() => {
           setModal(false);
           deleteDiscountData();
+          setLoadingData(false);
         }}
         centered
         title={
