@@ -327,7 +327,7 @@ const HeaderLayout = () => {
         </Flex>
       </Modal>
       <Flex>
-        <img src={SystemLogo} style={{ width: 200 }} />
+        <img src={SystemLogo} style={{ width: "100%" }} />
       </Flex>
       <Input
         placeholder="O que está buscando?"
