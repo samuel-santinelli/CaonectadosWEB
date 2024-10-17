@@ -6,7 +6,6 @@ import {
   Flex,
   Image,
   Input,
-  Loader,
   Modal,
   NumberInput,
   Text,
@@ -40,9 +39,11 @@ const HeaderLayout = () => {
   const [discountCouponError, setDiscountCouponError] = useState(false);
   const [discountCouponErrorMessage, setDiscountCouponErrorMessage] =
     useState("");
-  const [data, setData] = useState({
+  const [discountData, setDiscountData] = useState({
     discountCoupon: "",
   });
+  const [data, setData] = useState([]);
+  const [loadingData, setLoadingData] = useState(false);
 
   const validCoupons = [
     { name: "W3LCOM3", expired_date: "2024-12-31" }, // Válido até o final do ano
@@ -57,7 +58,7 @@ const HeaderLayout = () => {
   const handleSaveCoupon = () => {
     setInputLoad(true);
 
-    // Obter a data atual em formato "YYYY-MM-DD"
+    // Obter a discountData atual em formato "YYYY-MM-DD"
     const data_atual = new Date().toISOString().split("T")[0];
 
     // Filtrar o cupom válido com base no nome
@@ -74,7 +75,7 @@ const HeaderLayout = () => {
           setDiscountCoupon("");
           setDiscountCouponErrorMessage("");
           setDiscountModal(false);
-          setData({
+          setDiscountData({
             discountCoupon: discountCoupon,
           });
         }, 2000);
@@ -98,8 +99,17 @@ const HeaderLayout = () => {
     }
   };
 
-  async function deleteData() {
-    setData((prevData) => ({
+  async function handleSaveData(data) {
+    setData({
+      price: data.price,
+      freight: data.freight,
+      coupon_code: data.coupon_code,
+      total_price: data.total_price,
+    });
+  }
+
+  async function deleteDiscountData() {
+    setDiscountData((prevData) => ({
       ...prevData,
       discountCoupon: "",
     }));
@@ -110,7 +120,10 @@ const HeaderLayout = () => {
       <Modal
         size={"xl" + "xl"}
         opened={modal}
-        onClose={() => setModal(false)}
+        onClose={() => {
+          setModal(false);
+          deleteDiscountData();
+        }}
         centered
         title={
           <Flex direction={"row"} align={"center"} gap={"xs"}>
@@ -209,12 +222,12 @@ const HeaderLayout = () => {
                   onClick={() => setDiscountModal(true)}
                   style={{ cursor: "pointer" }}
                 >
-                  {data.discountCoupon
+                  {discountData.discountCoupon
                     ? "Alterar cupom"
                     : "Inserir código de cupom"}
                 </Text>
                 <Text size="sm" style={{ cursor: "pointer" }}>
-                  {data.discountCoupon}
+                  {discountData.discountCoupon}
                 </Text>
               </Flex>
               <Modal
@@ -225,7 +238,6 @@ const HeaderLayout = () => {
                   setDiscountCouponError(false);
                   setDiscountCoupon("");
                   setDiscountCouponErrorMessage("");
-                  deleteData();
                 }}
                 size={"md"}
                 centered
@@ -238,7 +250,6 @@ const HeaderLayout = () => {
                 }
               >
                 <TextInput
-                  py={50}
                   placeholder="Inserir código do cupom"
                   leftSection={<IconTicket color="blue" />}
                   size="md"
@@ -269,14 +280,11 @@ const HeaderLayout = () => {
                       ml={15}
                       size="xs"
                       w={140}
+                      loading={inputLoad}
                       h={30}
                       onClick={handleSaveCoupon}
                     >
-                      {inputLoad ? (
-                        <Loader size={"xs"} color="white" />
-                      ) : (
-                        "Adicionar Cupom"
-                      )}
+                      Adicionar Cupom
                     </Button>
                   }
                 />
@@ -301,7 +309,16 @@ const HeaderLayout = () => {
             </Flex>
 
             <Flex justify={"center"} align={"center"} mt={"xl"}>
-              <Button color="#FF8C00" w={"100%"} h={50}>
+              <Button
+                color="#FF8C00"
+                w={"100%"}
+                loading={loadingData}
+                h={50}
+                onClick={() => {
+                  handleSaveData(...data);
+                  setLoadingData(true);
+                }}
+              >
                 <Text fw={600}>Continuar compra</Text>
               </Button>
             </Flex>
