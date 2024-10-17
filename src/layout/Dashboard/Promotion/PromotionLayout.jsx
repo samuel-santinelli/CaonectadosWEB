@@ -5,8 +5,6 @@ import DividerTextComponent from "../../../components/divider/DividerText/Divide
 import { product } from "../../../models/product";
 
 const PromotionLayout = () => {
-
-
   function shuffleProduct(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1)); // Pega um índice aleatório
@@ -17,11 +15,9 @@ const PromotionLayout = () => {
 
   return (
     <Flex direction={"column"} gap={30} px={50}>
-      <DividerTextComponent        
-        title="POPULARES"        
-      />
+      <DividerTextComponent title="POPULARES" />
       <Carousel
-        slideSize={{ base: "100%", sm: "50%", md: "28%"}}
+        slideSize={{ base: "100%", sm: "50%", md: "28%" }}
         withIndicators={false}
         withControls={true}
         align="start"
@@ -29,7 +25,7 @@ const PromotionLayout = () => {
         controlSize={50}
       >
         {shuffleProduct(product).map((item, index) => (
-          <Carousel.Slide key={index}>
+          <Carousel.Slide>
             <PromotionCard
               key={index}
               image={item.image}

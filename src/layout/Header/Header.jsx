@@ -38,10 +38,11 @@ const HeaderLayout = () => {
   const [discountCoupon, setDiscountCoupon] = useState("");
   const [inputLoad, setInputLoad] = useState(false);
   const [discountCouponError, setDiscountCouponError] = useState(false);
-  const [discountCouponErrorMessage, setDiscountCouponErrorMessage] = useState("")
+  const [discountCouponErrorMessage, setDiscountCouponErrorMessage] =
+    useState("");
   const [data, setData] = useState({
-    discountCoupon: ""
-  })
+    discountCoupon: "",
+  });
 
   const validCoupons = [
     { name: "W3LCOM3", expired_date: "2024-12-31" }, // Válido até o final do ano
@@ -52,16 +53,18 @@ const HeaderLayout = () => {
     { name: "PETVIP20", expired_date: "2025-01-31" }, // Expira em janeiro de 2025
     { name: "VERAOPET", expired_date: "2024-08-31" }, // Já expirado
   ];
-  
+
   const handleSaveCoupon = () => {
     setInputLoad(true);
-  
+
     // Obter a data atual em formato "YYYY-MM-DD"
-    const data_atual = new Date().toISOString().split('T')[0];
-  
+    const data_atual = new Date().toISOString().split("T")[0];
+
     // Filtrar o cupom válido com base no nome
-    const validCoupon = validCoupons.find((item) => item.name === discountCoupon);
-  
+    const validCoupon = validCoupons.find(
+      (item) => item.name === discountCoupon
+    );
+
     if (validCoupon) {
       // Verificar se o cupom está expirado
       if (validCoupon.expired_date >= data_atual) {
@@ -88,12 +91,19 @@ const HeaderLayout = () => {
       setTimeout(() => {
         setInputLoad(false);
         setDiscountCouponError(true);
-        setDiscountCouponErrorMessage("Cupom inválido. Verifique o código inserido.");
+        setDiscountCouponErrorMessage(
+          "Cupom inválido. Verifique o código inserido."
+        );
       }, 1000);
     }
   };
-  
-  
+
+  async function deleteData() {
+    setData((prevData) => ({
+      ...prevData,
+      discountCoupon: "",
+    }));
+  }
 
   return (
     <Flex gap={45} className={classes.control}>
@@ -144,7 +154,6 @@ const HeaderLayout = () => {
                           w={100}
                           max={10}
                           step={1}
-                          withControls
                         />
                         <Flex direction={"column"} align={"center"}>
                           <Flex direction={"row"} gap={5}>
@@ -193,22 +202,20 @@ const HeaderLayout = () => {
                 <Text size="sm">R$ 29</Text>
               </Flex>
               <Flex direction={"row"} justify={"space-between"} w={"100%"}>
-              <Text
-                color="blue"
-                size="sm"
-                fw={600}
-                onClick={() => setDiscountModal(true)}
-                style={{ cursor: "pointer" }}
-              >
-                {data.discountCoupon ? "Alterar cupom" : "Inserir código de cupom"}
-              </Text>
-              <Text
-
-                size="sm"                
-                style={{ cursor: "pointer" }}
-              >
-                {data.discountCoupon}
-              </Text>
+                <Text
+                  color="blue"
+                  size="sm"
+                  fw={600}
+                  onClick={() => setDiscountModal(true)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {data.discountCoupon
+                    ? "Alterar cupom"
+                    : "Inserir código de cupom"}
+                </Text>
+                <Text size="sm" style={{ cursor: "pointer" }}>
+                  {data.discountCoupon}
+                </Text>
               </Flex>
               <Modal
                 opened={discountModal}
@@ -217,6 +224,8 @@ const HeaderLayout = () => {
                   setInputLoad(false);
                   setDiscountCouponError(false);
                   setDiscountCoupon("");
+                  setDiscountCouponErrorMessage("");
+                  deleteData();
                 }}
                 size={"md"}
                 centered
@@ -247,6 +256,11 @@ const HeaderLayout = () => {
                   }
                   onChange={(e) => setDiscountCoupon(e.target.value)}
                   value={discountCoupon}
+                  onKeyUp={(e) => {
+                    if (e.key === "Enter") {
+                      handleSaveCoupon();
+                    }
+                  }} // Apenas chama handleSaveCoupon se a tecla Enter for pressionada
                   maxLength={23}
                   rightSectionWidth={180}
                   rightSection={
@@ -310,7 +324,7 @@ const HeaderLayout = () => {
           <ActionIcon
             variant="transparent"
             size="lg"
-            aria-label="Gallery"
+            aria-label="User"
             color="black"
             className={classes.actionIcons}
           >
@@ -320,7 +334,7 @@ const HeaderLayout = () => {
           <ActionIcon
             variant="transparent"
             size="lg"
-            aria-label="Settings"
+            aria-label="Shopping Cart"
             color="black"
             className={classes.actionIcons}
             onClick={() => setModal(true)}
@@ -331,7 +345,7 @@ const HeaderLayout = () => {
           <ActionIcon
             variant="transparent"
             size="lg"
-            aria-label="Likes"
+            aria-label="Cube Plus"
             color="black"
             className={classes.actionIcons}
           >
@@ -340,7 +354,7 @@ const HeaderLayout = () => {
           <ActionIcon
             variant="transparent"
             size="lg"
-            aria-label="Likes"
+            aria-label="Logout"
             color="black"
             className={classes.actionIcons}
           >
