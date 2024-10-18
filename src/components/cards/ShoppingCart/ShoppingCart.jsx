@@ -10,7 +10,7 @@ const ShoppingCart = ({
   discount_price,
 }) => {
   return (
-    <Card key={index} withBorder maw={"100%"} mih={180}>
+    <Card key={index} withBorder maw={"100%"} mih={200}>
       <Flex direction={"row"} gap={"md"}>
         <Flex
           direction={"row"}
