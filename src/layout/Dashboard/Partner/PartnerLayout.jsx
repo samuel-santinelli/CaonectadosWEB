@@ -4,6 +4,7 @@ import PetLovePartner from "../../../assets/dashboard/partners/petlove.png";
 import SyngentaPartner from "../../../assets/dashboard/partners/syngenta.png";
 import PartnerCard from "../../../components/cards/PartnerCard/PartnerCard";
 import DividerTextComponent from "../../../components/divider/DividerText/DividerText";
+import classes from "./PartnerLayout.module.css"
 
 const PartnerLayout = () => {
   return (
@@ -11,7 +12,7 @@ const PartnerLayout = () => {
       <DividerTextComponent        
         title="PARCEIROS"        
       />
-      <Flex direction={"row"} justify={"center"} align={"center"} gap={50}>
+      <Flex className={classes.container_partners} justify={"center"} align={"center"} gap={"md"}>
         <PartnerCard image={SyngentaPartner} />
         <PartnerCard image={PetLovePartner} />
         <PartnerCard image={BayerPartner} />
