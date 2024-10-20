@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Reem+Kufi:wght@400..700&display=swap');
+
+
+
+.container {
+  margin-top: 80px;
+  margin-left: 50px;
+  max-width: 1200px; /* Aumenta a largura máxima */
+  padding: 0 15px;
+  width: 100%;
+  
+}
+.title {
+    color: #FF4C00;
+    font-family: 'Montserrat';
+    font-weight: 600;
+    font-size: 28px;
+    
+  }
+  .usuario {
+    display: flex; /* Ativa o Flexbox */
+    justify-content: space-between; /* Espaça a div da esquerda e a dos botões */
+    align-items: center; /* Centraliza verticalmente os itens */
+    border-radius: 7px;
+    border: 1px solid #B1B1B1;
+    height: 300px;
+    width: 110%;
+    margin-top: 25px;
+    padding: 15px; /* Adiciona padding para evitar que os itens fiquem colados nas bordas */
+}
+  .salvar{
+    
+    border-radius: 10px;
+    width: 200px;/* Largura do botão */
+    height: 35px;
+    border: none;
+    padding: 10px;
+    color: #ffff;
+    cursor: pointer; /* Cursor de ponteiro ao passar sobre o botão */
+    background-color: #FF4C00;
+   
+  }
+  .salvar:hover{
+    background-color: #b74211;
+  }
+
+  .voltar{
+    border-radius: 10px;
+    width: 200px; /* Largura do botão */
+    height: 35px;
+    border: 1px solid #FF4C00;
+    padding: 10px;
+   background-color: #fff;
+    color: #FF4C00;
+    cursor: pointer; /* Cursor de ponteiro ao passar sobre o botão */
+    
+}
+
+.voltar:hover{
+    background-color: #f1dfdf;
+}
+.buttonContainer {
+    display: flex; /* Ativa o Flexbox */
+  flex-direction: row; /* Organiza os botões em linha */
+  gap: 30px; /* Espaçamento entre os botões */
+  justify-content: flex-end; /* Alinha os botões à direita */
+  align-items: flex-end; /* Alinha os botões na parte inferior */
+  position: absolute; /* Faz o container dos botões se posicionar em relação ao seu pai */
+  bottom: 15%; /* Distância do fundo */
+  right: 10%; /* Distância da direita */
+  
+}
+.dadosUsuario {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr; /* Duas colunas para labels e inputs */
+    grid-column-gap: 5px; /* Espaço entre as colunas */
+    grid-row-gap: 10px; /* Espaço entre as linhas */
+    align-items: center; /* Alinha o conteúdo verticalmente */
+    margin-top: 20px;
+  }
+  
+  .textInput {
+    width: 300px; /* Define a largura dos campos de texto */
+    font-family: 'Montserrat';
+    
+  }
+  
+  .textLabel {
+    font-weight: bold; /* Deixa os labels em negrito */
+    font-family: 'Montserrat';
+  }
+  .textInput input {
+    border: 1px solid #B1B1B1;
+    border-radius: 5px;
+    width: 80%;
+    height: 30px;
+    outline: none;
+   padding-left: 10px;
+    
+  }
+  .textInputSenha {
+    font-size: 35px;
+    
+  }

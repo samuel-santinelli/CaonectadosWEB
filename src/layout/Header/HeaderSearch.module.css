@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Reem+Kufi:wght@400..700&display=swap');
+
+.header {
+    height: rem(56px);
+    margin-bottom: rem(120px);
+    background-color: #D9D9D940;
+}
+
+.inner {
+    height: rem(56px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.link {
+    display: inline-block;
+    margin: 0 15px;
+    line-height: 4;
+    padding: rem(8px) rem(12px);
+    text-decoration: none;
+    font-family: 'Montserrat';
+    color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
+    font-size: 15px;
+    font-weight: 500;
+
+    @mixin hover {
+        background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+    }
+}
+.link:hover {
+    color: #FF4C00;
+    font-weight: bold;
+}
+.link:active {
+    color: #FF4C00; 
+    font-weight: bold;
+}
+
+.activeLink {
+    color: #FF4C00; 
+    font-weight: bold; 
+}
+.superior {
+    height: rem(56px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 13px;
+    margin-top: 18px;
+}
+
+.logo {
+    width: 30px;
+    height: 30px;
+}
+
+.titleLogo {
+    left: 30%;
+    font-size: 20px;
+    color: #FF4C00;
+    font-family: 'Reem Kufi', sans-serif;
+}
+
+.search {
+  border-radius: 7px;
+  width: 450px;
+  height: 40px; /* Altura da barra de pesquisa */
+  background-color: #fff;
+  border: 1px solid #B1B1B1; /* Cor da borda */
+  margin: 0 100px; /* Margem em relação ao restante do layout */
+  display: flex; /* Ativa o Flexbox na barra de pesquisa */
+  align-items: center; /* Centraliza verticalmente o conteúdo */
+  padding: 0; /* Remover padding para evitar espaços extras */
+}
+
+.search input {
+  border: none; /* Remove a borda padrão do input */
+  outline: none; /* Remove o contorno ao focar no input */
+  height: 100%; /* Usa a altura total da barra de pesquisa */
+  width: 400px;
+  flex: 1; /* Faz com que o input use todo o espaço disponível */
+  padding: 0 10px; /* Espaçamento interno do input */
+}
+
+.searchIcon {
+    position: absolute;
+    right: 34%; /* Coloca o ícone à direita */
+    stroke-width: 1.5;
+    margin-top: -21px;
+  }
+
+
+.icons {
+    width: 20px;
+    height: 20px;
+}
+.dropdown {
+    position: absolute;
+    top: 40px; /* Ajusta a posição logo abaixo da barra de pesquisa */
+    width: 100%; /* Faz com que o dropdown tenha a mesma largura da barra de pesquisa */
+    background-color: white;
+    border: 1px solid #b1b1b1;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+   
+  }
