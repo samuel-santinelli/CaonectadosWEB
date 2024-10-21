@@ -19,7 +19,7 @@ import { useForm } from "@mantine/form";
 import { useState } from "react";
 import { formatCEP } from "../../utils/cep-formatter";
 import { useNavigate } from "react-router-dom";
-// import { formatCEP } from "../../utils/cep-formatter";
+import classes from "./FinalizePurchase.module.css"
 
 const FinalizePurchase = () => {
   const navigate = useNavigate();
@@ -77,7 +77,7 @@ const FinalizePurchase = () => {
   return (
     <DefaultView>
       {/* <DefaultTitle title="Finalizar pedido" /> */}
-      <Flex direction={"row"} gap={"md"} w={"100%"}>
+      <Flex direction={"row"} gap={"md"} w={"100%"} className={classes.cards_container}>
         {/* <Flex direction={"column"} gap={"md"}>
           {product.map((item, index) => (
             <ShoppingCart
@@ -91,7 +91,7 @@ const FinalizePurchase = () => {
             />
           ))}
         </Flex> */}
-        <Flex direction={"column"} w={"75%"} gap={"md"}>
+        <Flex direction={"column"} w={"75%"} gap={"md"} className={classes.cards}>
           <Flex justify={"start"}>
             <DefaultTitle title="Forma de pagamento" />
           </Flex>
@@ -208,7 +208,7 @@ const FinalizePurchase = () => {
             </Button>
           </Flex>
         </Flex>
-        <Flex direction={"column"} w={"70%"} align={"start"} gap={"md"}>
+        <Flex direction={"column"} w={"70%"} align={"start"} gap={"md"}  className={classes.cards}>
           <DefaultTitle title={"Resumo da compra"} />
           <Card withBorder w={"100%"}>
             <Flex justify={"space-between"} w={"100%"}>

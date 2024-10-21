@@ -1,0 +1,9 @@
+@media (max-width: $mantine-breakpoint-sm) {
+  .cards_container {
+    flex-direction: column !important;    
+  }
+
+  .cards {
+    width: 100% !important;
+  }
+}
