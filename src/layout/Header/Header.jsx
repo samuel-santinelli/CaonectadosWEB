@@ -3,9 +3,10 @@ import {
   Button,
   Card,
   Divider,
-  Flex,  
+  Flex,
+  Image,
   Input,
-  Modal,  
+  Modal,
   Progress,
   Text,
   TextInput,
@@ -132,7 +133,7 @@ const HeaderLayout = () => {
   }
 
   return (
-    <Flex gap={45} className={classes.control}>
+    <Flex gap={"md"} className={classes.control}>
       <Modal
         size={"xl" + "xl"}
         opened={modal}
@@ -331,8 +332,8 @@ const HeaderLayout = () => {
           </Text>
         </Flex>
       </Modal>
-      <Flex>
-        <img src={SystemLogo} style={{ width: "100%" }} />
+      <Flex className={classes.image}>
+        <Image w={200} src={SystemLogo} />
       </Flex>
       <Input
         placeholder="O que está buscando?"
@@ -342,49 +343,47 @@ const HeaderLayout = () => {
         w={500}
       />
 
-      <Flex className={classes.icons}>
-        <ActionIcon.Group>
-          <ActionIcon
-            variant="transparent"
-            size="lg"
-            aria-label="User"
-            color="black"
-            className={classes.actionIcons}
-          >
-            <IconUser style={{ width: 20 }} stroke={1.5} />
-          </ActionIcon>
+      <ActionIcon.Group>
+        <ActionIcon
+          variant="transparent"
+          size="lg"
+          aria-label="User"
+          color="black"
+          className={classes.actionIcons}
+        >
+          <IconUser style={{ width: 20 }} stroke={1.5} />
+        </ActionIcon>
 
-          <ActionIcon
-            variant="transparent"
-            size="lg"
-            aria-label="Shopping Cart"
-            color="black"
-            className={classes.actionIcons}
-            onClick={() => setModal(true)}
-          >
-            <IconShoppingCart style={{ width: 20 }} stroke={1.5} />
-          </ActionIcon>
+        <ActionIcon
+          variant="transparent"
+          size="lg"
+          aria-label="Shopping Cart"
+          color="black"
+          className={classes.actionIcons}
+          onClick={() => setModal(true)}
+        >
+          <IconShoppingCart style={{ width: 20 }} stroke={1.5} />
+        </ActionIcon>
 
-          <ActionIcon
-            variant="transparent"
-            size="lg"
-            aria-label="Cube Plus"
-            color="black"
-            className={classes.actionIcons}
-          >
-            <IconCubePlus style={{ width: 20 }} stroke={1.5} />
-          </ActionIcon>
-          <ActionIcon
-            variant="transparent"
-            size="lg"
-            aria-label="Logout"
-            color="black"
-            className={classes.actionIcons}
-          >
-            <IconLogout style={{ width: 20 }} stroke={1.5} />
-          </ActionIcon>
-        </ActionIcon.Group>
-      </Flex>
+        <ActionIcon
+          variant="transparent"
+          size="lg"
+          aria-label="Cube Plus"
+          color="black"
+          className={classes.actionIcons}
+        >
+          <IconCubePlus style={{ width: 20 }} stroke={1.5} />
+        </ActionIcon>
+        <ActionIcon
+          variant="transparent"
+          size="lg"
+          aria-label="Logout"
+          color="black"
+          className={classes.actionIcons}
+        >
+          <IconLogout style={{ width: 20 }} stroke={1.5} />
+        </ActionIcon>
+      </ActionIcon.Group>
     </Flex>
   );
 };
