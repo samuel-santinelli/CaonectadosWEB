@@ -13,27 +13,31 @@ const PromotionLayout = () => {
     return arr;
   }
 
+  console.log(product);
+  
+
   return (
     <Flex direction={"column"} gap={30} px={50}>
-      <DividerTextComponent title="POPULARES" />
+      <DividerTextComponent title="PROMOÇÕES" />
       <Carousel
-        slideSize={{ base: "100%", sm: "50%", md: "28%" }}
+        slideSize="25%" 
         withIndicators={false}
         withControls={true}
         align="start"
         slidesToScroll={4}
         controlSize={50}
+        slideGap={0} 
       >
-        {shuffleProduct(product).map((item, index) => (
+        {shuffleProduct(product).map((item, index) => (          
           <Carousel.Slide>
             <PromotionCard
               key={index}
               image={item.image}
               name={item.name}
-              discountPercentage={item.discountPercentage}
+              discount_percentage={item.discount_percentage}
               description={item.description}
               price={item.price}
-              discountPrice={item.discountPrice}
+              discount_price={item.discount_price}
             />
           </Carousel.Slide>
         ))}

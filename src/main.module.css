@@ -9,9 +9,6 @@ img {
   }
   
 /* Bloqueia a seleção de conteúdo no site */
-  body {
-    user-select: none;
-  }
 
 ::-webkit-scrollbar {
     width: 12px;
@@ -25,7 +22,7 @@ img {
   
 
   ::-webkit-scrollbar-thumb {
-    background-color: #ff8c00; 
+    background-color: #bdbdbd; 
     border-radius: 10px; 
     border: 2px solid #f1f1f1; 
   }

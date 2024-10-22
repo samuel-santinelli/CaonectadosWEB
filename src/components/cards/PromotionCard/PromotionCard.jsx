@@ -7,8 +7,8 @@ const PromotionCard = ({
   name,
   description,
   price,
-  discountPercentage,
-  discountPrice,
+  discount_percentage,
+  discount_price,
 }) => {
   return (
     <Card
@@ -28,9 +28,9 @@ const PromotionCard = ({
 
       <Group justify="space-between" mt="md" mb="xs">
         <Text fw={500}>
-          {name.length > 20 ? name.substring(0, 20) + "..." : name}
+          {name.length > 20 ? name.substring(0, 15) + "..." : name}
         </Text>
-        <Badge color="red">{`${discountPercentage} % OFF`}</Badge>
+        <Badge color="red">{`${discount_percentage} % OFF`}</Badge>
       </Group>
 
       <Flex direction={"column"} gap={"xs"}>
@@ -39,7 +39,7 @@ const PromotionCard = ({
         </Text>
 
         <Flex gap={"xs"}>
-          <Text>{`R$ ${discountPrice}`}</Text>
+          <Text>{`R$ ${discount_price}`}</Text>
           <Text td="line-through" color="gray" size="xs">
             {`R$ ${price}`}
           </Text>
@@ -47,8 +47,7 @@ const PromotionCard = ({
       </Flex>
       <Button
         fullWidth
-        mt="md"
-        radius="md"
+        mt="md"        
         color={"orange"}
         rightSection={<IconShoppingCartPlus size={20} />}
       >

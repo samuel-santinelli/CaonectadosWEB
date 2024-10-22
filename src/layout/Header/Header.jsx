@@ -3,11 +3,10 @@ import {
   Button,
   Card,
   Divider,
-  Flex,
-  Image,
+  Flex,  
   Input,
-  Modal,
-  NumberInput,
+  Modal,  
+  Progress,
   Text,
   TextInput,
 } from "@mantine/core";
@@ -24,11 +23,13 @@ import {
 } from "@tabler/icons-react";
 import { useState } from "react";
 import { product } from "../../models/product";
+import { useNavigate } from "react-router-dom";
+import ShoppingCart from "../../components/cards/ShoppingCart/ShoppingCart.JSX";
 
 const HeaderLayout = () => {
   const [modal, setModal] = useState(false);
   const totalPrice = product.reduce((accumulator, product) => {
-    const priceAsNumber = parseFloat(product.discountPrice.replace(",", "."));
+    const priceAsNumber = parseFloat(product.discount_price.replace(",", "."));
     return accumulator + priceAsNumber;
   }, 0);
   const formattedPrice = parseFloat(totalPrice).toFixed(2);
@@ -40,10 +41,15 @@ const HeaderLayout = () => {
   const [discountCouponErrorMessage, setDiscountCouponErrorMessage] =
     useState("");
   const [discountData, setDiscountData] = useState({
-    discountCoupon: "",
+    price: "",
+    freight: "",
+    discount_coupon: "",
+    coupon_code: "",
+    total_price: "",
   });
   const [data, setData] = useState([]);
   const [loadingData, setLoadingData] = useState(false);
+  const navigate = useNavigate();
 
   const validCoupons = [
     { name: "W3LCOM3", expired_date: "2024-12-31" }, // Válido até o final do ano
@@ -76,7 +82,7 @@ const HeaderLayout = () => {
           setDiscountCouponErrorMessage("");
           setDiscountModal(false);
           setDiscountData({
-            discountCoupon: discountCoupon,
+            discount_coupon: discountCoupon,
           });
         }, 2000);
       } else {
@@ -99,19 +105,29 @@ const HeaderLayout = () => {
     }
   };
 
-  async function handleSaveData(data) {
-    setData({
-      price: data.price,
-      freight: data.freight,
-      coupon_code: data.coupon_code,
-      total_price: data.total_price,
-    });
+  function handleSaveData(data) {
+    setLoadingData(true);
+
+    setTimeout(() => {
+      setData({
+        price: data.price,
+        freight: data.freight,
+        discount_coupon: data.discount_coupon,
+        coupon_code: data.coupon_code,
+        total_price: data.total_price,
+      });
+      setLoadingData(false);
+
+      // Navega para a página de compra após salvar os dados
+      navigate("/buy");
+      setModal(false);
+    }, 1500);
   }
 
   async function deleteDiscountData() {
     setDiscountData((prevData) => ({
       ...prevData,
-      discountCoupon: "",
+      discount_coupon: "",
     }));
   }
 
@@ -139,57 +155,18 @@ const HeaderLayout = () => {
             direction={"column"}
             gap={"xs"}
             style={{ overflow: "auto" }}
-            mah={500}
+            mah={380}
           >
             {product.map((item, index) => (
-              <Card key={index} withBorder maw={700} mih={180}>
-                <Flex direction={"row"} gap={"md"}>
-                  <Flex
-                    direction={"row"}
-                    justify={"start"}
-                    align={"center"}
-                    gap={"xs"}
-                    p={5}
-                  >
-                    <Flex justify={"center"} align={"center"}>
-                      <Image src={item.image} w={100} h={100} />
-                    </Flex>
-                    <Flex direction={"column"} gap={5}>
-                      <Text fw={500}>{item.name}</Text>
-                      <Text>{item.description}</Text>
-                      <Flex
-                        direction={"row"}
-                        justify={"space-between"}
-                        align={"center"}
-                      >
-                        <NumberInput
-                          defaultValue={1}
-                          min={0}
-                          w={100}
-                          max={10}
-                          step={1}
-                        />
-                        <Flex direction={"column"} align={"center"}>
-                          <Flex direction={"row"} gap={5}>
-                            <Text
-                              size="xs"
-                              color="green"
-                            >{`-${item.discountPercentage}`}</Text>
-                            <Text
-                              td="line-through"
-                              size="xs"
-                            >{`R$ ${item.price}`}</Text>
-                          </Flex>
-                          <Text
-                            fw={500}
-                            color="green"
-                          >{`R$ ${item.discountPrice}`}</Text>
-                        </Flex>
-                      </Flex>
-                    </Flex>
-                  </Flex>
-                </Flex>
-              </Card>
+              <ShoppingCart
+                index={index}
+                image={item.image}
+                name={item.name}
+                discount_percentage={item.discount_percentage}
+                description={item.description}
+                discount_price={item.discount_price}
+                price={item.price}
+              />
             ))}
           </Flex>
           <Card withBorder w={400}>
@@ -213,7 +190,9 @@ const HeaderLayout = () => {
               </Flex>
               <Flex direction={"row"} justify={"space-between"} w={"100%"}>
                 <Text size="sm">Frete</Text>
-                <Text size="sm">R$ 29</Text>
+                <Text size="sm" color="green">
+                  Grátis
+                </Text>
               </Flex>
               <Flex direction={"row"} justify={"space-between"} w={"100%"}>
                 <Text
@@ -223,12 +202,12 @@ const HeaderLayout = () => {
                   onClick={() => setDiscountModal(true)}
                   style={{ cursor: "pointer" }}
                 >
-                  {discountData.discountCoupon
+                  {discountData.discount_coupon
                     ? "Alterar cupom"
                     : "Inserir código de cupom"}
                 </Text>
                 <Text size="sm" style={{ cursor: "pointer" }}>
-                  {discountData.discountCoupon}
+                  {discountData.discount_coupon}
                 </Text>
               </Flex>
               <Modal
@@ -252,7 +231,7 @@ const HeaderLayout = () => {
               >
                 <TextInput
                   placeholder="Inserir código do cupom"
-                  leftSection={<IconTicket color="blue" />}
+                  leftSection={<IconTicket color="#FF8C00" />}
                   size="md"
                   error={
                     discountCouponError ? (
@@ -316,14 +295,40 @@ const HeaderLayout = () => {
                 loading={loadingData}
                 h={50}
                 onClick={() => {
-                  handleSaveData(...data);
-                  setLoadingData(true);
+                  handleSaveData({
+                    price: "100.00", // Substitua por valores reais ou de um estado
+                    freight: "15.00",
+                    discount_coupon: "10.00",
+                    coupon_code: "PROMO2024",
+                    total_price: "105.00",
+                  });
                 }}
               >
                 <Text fw={600}>Continuar compra</Text>
               </Button>
             </Flex>
           </Card>
+        </Flex>
+        <Flex direction={"column"} gap={"sm"} my={"lg"} w={"62.5%"}>
+          <Flex direction={"row"} justify={"space-between"}>
+            <Text fw={500}>Frete</Text>
+            <Text fw={600} color="green">
+              Grátis
+            </Text>
+          </Flex>
+          <Divider />
+          <Flex justify={"space-between"} align={"center"} gap={"xs"}>
+            <Progress color="green" value={100} w={"87%"} />
+            <Text size="xs" color="green" fw={600}>
+              Frete grátis
+            </Text>
+          </Flex>
+          <Text size="sm">
+            <Flex direction={"row"} gap={4}>
+              Nas compras acima de R$200, o <Text fw={600}>frete</Text> é
+              grátis.
+            </Flex>
+          </Text>
         </Flex>
       </Modal>
       <Flex>

@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { DefaultLayout } from "./DefaultLayout/DefaultLayout";
 import DashboardLayout from "./Dashboard/DashboardLayout";
+import FinalizePurchase from "./FinalizePurchase/FinalizePurchase";
 
 const Content = () => {
   const routes = [
@@ -13,6 +14,11 @@ const Content = () => {
       path: "/",
       name: "Dashboard View",
       element: <DashboardLayout />,
+    },
+    {
+      path: "/buy",
+      name: "Finalize Purchase View",
+      element: <FinalizePurchase />,
     },
   ];
 

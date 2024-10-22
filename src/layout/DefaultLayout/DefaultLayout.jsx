@@ -4,9 +4,11 @@ import classes from "./MobileNavbar.module.css";
 import DiscountHeaderLayout from "../DiscountHeader/DiscountHeaderLayout";
 import HeaderLayout from "../Header/Header";
 import Content from "../Content";
+import { useNavigate } from "react-router-dom";
 
 export function DefaultLayout() {
   const [opened, { toggle }] = useDisclosure();
+  const navigate = useNavigate();
 
   return (
     <AppShell
@@ -18,7 +20,7 @@ export function DefaultLayout() {
       }}
       padding="md"
     >
-      <AppShell.Header style={{ border: 0}}>
+      <AppShell.Header style={{ border: 0 }}>
         <DiscountHeaderLayout />
         <HeaderLayout />
         <Group h="100%" px="md" style={{ marginTop: -45, border: 0 }}>
@@ -26,7 +28,12 @@ export function DefaultLayout() {
           <Group justify="center" style={{ flex: 1 }}>
             {/* <MantineLogo size={30} /> */}
             <Group ml="xl" gap={0} visibleFrom="sm">
-              <UnstyledButton className={classes.control}>Home</UnstyledButton>
+              <UnstyledButton
+                className={classes.control}
+                onClick={() => navigate("/")}
+              >
+                Home
+              </UnstyledButton>
               <UnstyledButton className={classes.control}>
                 Cadastro de usuários
               </UnstyledButton>
@@ -45,7 +52,12 @@ export function DefaultLayout() {
       </AppShell.Header>
 
       <AppShell.Navbar py="md" px={4}>
-        <UnstyledButton className={classes.control}>Home</UnstyledButton>
+        <UnstyledButton
+          className={classes.control}
+          onClick={() => navigate("/")}
+        >
+          Home
+        </UnstyledButton>
         <UnstyledButton className={classes.control}>
           Cadastro de usuários
         </UnstyledButton>
@@ -61,7 +73,7 @@ export function DefaultLayout() {
       </AppShell.Navbar>
 
       <AppShell.Main px={0}>
-      <Content/>
+        <Content />
       </AppShell.Main>
     </AppShell>
   );

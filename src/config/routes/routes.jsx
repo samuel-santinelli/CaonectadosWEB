@@ -1,6 +1,6 @@
 import DashboardLayout from "../../layout/Dashboard/DashboardLayout";
 import { DefaultLayout } from "../../layout/DefaultLayout/DefaultLayout";
-import DiscountHeaderLayout from "../../layout/DiscountHeader/DiscountHeaderLayout";
+import FinalizePurchase from "../../layout/FinalizePurchase/FinalizePurchase";
 
 const defineRoutes = async () => {
   const routes = [
@@ -15,10 +15,11 @@ const defineRoutes = async () => {
       element: <DashboardLayout />,
     },
     {
-      path: "/discount",
-      name: "Discount View",
-      element: <DiscountHeaderLayout />,
+      path: "/buy",
+      name: "Finalize Purchase View",
+      element: <FinalizePurchase />,
     },
+    
   ];
 
   return routes;
