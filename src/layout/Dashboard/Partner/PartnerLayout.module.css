@@ -1,0 +1,8 @@
+
+@media (max-width: $mantine-breakpoint-sm) {
+    .container_partners {
+      justify-content: center;
+      padding-right: 0;
+      flex-direction: column;            
+    }
+  }

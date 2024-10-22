@@ -6,3 +6,15 @@
     justify-content: center;
     align-items: center;
 }
+
+.control {
+    @media (max-width: $mantine-breakpoint-xs){
+        font-size: 20px !important;
+    }
+}
+
+.control_text {
+    @media (max-width: $mantine-breakpoint-xs){
+        font-size: 12px !important;
+    }
+}

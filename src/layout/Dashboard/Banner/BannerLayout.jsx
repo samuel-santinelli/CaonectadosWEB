@@ -15,7 +15,7 @@ const BannerLayout = () => {
           <Text color="#fff">Roupas para Pets com 10% de desconto</Text>
         </Flex>
       </Flex>
-      <Flex justify={"center"} gap={160}>
+      <Flex justify={"center"} gap={40} className={classes.card_container}>
         <Card withBorder={true} className={classes.card}>
           <Flex direction={"row"} justify={"center"} align={"center"} gap={10}>
             <img src={FoodImage} />

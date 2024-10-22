@@ -26,7 +26,7 @@ const PromotionLayout = () => {
         align="start"
         slidesToScroll={4}
         controlSize={50}
-        slideGap={0} 
+        slideGap={"xl"} 
       >
         {shuffleProduct(product).map((item, index) => (          
           <Carousel.Slide>
