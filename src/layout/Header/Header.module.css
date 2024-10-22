@@ -1,14 +1,18 @@
 .control{
     padding: 10px;
     justify-content: center;
-
 }
 
-.actionIcons{
-      
+.actionIcons{      
     @mixin hover {
         /* background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6)); */
         color: #FF4C00;
         transition: 0.5s;
       }
 }
+
+@media (max-width: $mantine-breakpoint-sm) {
+    .image {
+      display: none;
+    }
+  }
