@@ -15,4 +15,16 @@
     .image {
       display: none;
     }
+
+    .product_card{
+      display: none;
+    }
+
+    .freight_card{
+      width: 100% !important; 
+    }
+    
+    .progress_card{
+      width: 78% !important;
+    }
   }

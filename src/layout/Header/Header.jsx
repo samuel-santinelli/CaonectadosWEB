@@ -156,6 +156,7 @@ const HeaderLayout = () => {
             direction={"column"}
             gap={"xs"}
             style={{ overflow: "auto" }}
+            className={classes.product_card}
             mah={380}
           >
             {product.map((item, index) => (
@@ -310,7 +311,7 @@ const HeaderLayout = () => {
             </Flex>
           </Card>
         </Flex>
-        <Flex direction={"column"} gap={"sm"} my={"lg"} w={"62.5%"}>
+        <Flex direction={"column"} gap={"sm"} my={"lg"} w={"62.5%"} className={classes.freight_card}>
           <Flex direction={"row"} justify={"space-between"}>
             <Text fw={500}>Frete</Text>
             <Text fw={600} color="green">
@@ -319,7 +320,7 @@ const HeaderLayout = () => {
           </Flex>
           <Divider />
           <Flex justify={"space-between"} align={"center"} gap={"xs"}>
-            <Progress color="green" value={100} w={"87%"} />
+            <Progress color="green" value={100} w={"87%"} className={classes.progress_card} />
             <Text size="xs" color="green" fw={600}>
               Frete grátis
             </Text>
