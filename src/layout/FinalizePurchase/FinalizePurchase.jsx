@@ -590,7 +590,7 @@ const FinalizePurchase = () => {
                   withArrow
                   label={
                     <Flex direction={"column"}>
-                      <Text size="xs">{product.map((item) => item.name)}</Text>
+                      <Text size="xs">{product?.map((item) => item?.name).join(', ')}</Text>
                     </Flex>
                   }
                 >
