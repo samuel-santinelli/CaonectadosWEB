@@ -48,7 +48,7 @@ const HeaderLayout = () => {
     coupon_code: "",
     total_price: "",
   });
-  const [data, setData] = useState([]);
+  const [, setData] = useState([]);
   const [loadingData, setLoadingData] = useState(false);
   const navigate = useNavigate();
 
