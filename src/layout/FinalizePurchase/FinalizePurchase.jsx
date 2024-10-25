@@ -14,6 +14,7 @@ import {
   Image,
   Loader,
   Modal,
+  Progress,
   Radio,
   rem,
   SimpleGrid,
@@ -27,9 +28,11 @@ import {
   IconCheck,
   IconCopy,
   IconCreditCard,
+  IconHourglassHigh,
+  IconHourglassOff,
 } from "@tabler/icons-react";
 import { useForm } from "@mantine/form";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { formatCEP } from "../../utils/cep-formatter";
 import { useNavigate } from "react-router-dom";
 import classes from "./FinalizePurchase.module.css";
@@ -51,6 +54,9 @@ const FinalizePurchase = () => {
   const [cardLoading, setCardLoading] = useState(false);
   const [pixModal, setPixModal] = useState(false);
   const [ticketModal, setTicketModal] = useState(false);
+  const [FinalizePurchase, setFinalizePurchase] = useState(false);
+  const [finishPayment, setFinishPayment] = useState(false);
+
   const adress_form = useForm({
     initialValues: {
       cep: "",
@@ -61,8 +67,26 @@ const FinalizePurchase = () => {
       city: "",
       complement: "",
     },
+
+    validate: {
+      cep: (value) =>
+        value.length === 0
+          ? "CEP é obrigatório"
+          : null,
+      street: (value) => (value.length === 0 ? "Rua é obrigatória" : null),
+      district: (value) => (value.length === 0 ? "Bairro é obrigatório" : null),
+      number: (value) =>
+        value.length === 0
+          ? "Número é obrigatório"
+          : isNaN(value) || Number(value) <= 0
+          ? "O número deve ser um valor positivo"
+          : null,
+      state: (value) => (value.length === 0 ? "Estado é obrigatório" : null),
+      city: (value) => (value.length === 0 ? "Cidade é obrigatória" : null),
+    },
   });
 
+  console.log(adress_form);
   const handleCepChange = async (cep) => {
     const cleanCep = cep.replace(/\D/g, "");
     if (cleanCep.length === 8) {
@@ -98,6 +122,39 @@ const FinalizePurchase = () => {
       }
     }
   };
+
+  const [timeLeft, setTimeLeft] = useState(1800);
+
+  useEffect(() => {
+    if (timeLeft > 0) {
+      const timer = setInterval(() => {
+        setTimeLeft((prev) => prev - 1);
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }
+  }, [timeLeft]);
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
+
+  const percentage = (timeLeft / 1800) * 100;
+
+  const progressColor =
+    percentage > 30 ? "teal" : percentage > 10 ? "orange" : "red";
+
+  useEffect(() => {
+    if (timeLeft > 0) {
+      const timer = setInterval(() => {
+        setTimeLeft(timeLeft - 1);
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }
+  }, [timeLeft]);
 
   const data = [
     {
@@ -272,9 +329,49 @@ const FinalizePurchase = () => {
                 </CopyButton>
               }
             />
-            <Button mt={"md"} color="teal">
+            <Button mt={"md"} color="teal" disabled={timeLeft === 0}>
               Continuar
             </Button>
+          </Flex>
+          <Flex
+            gap={"xs"}
+            justify={"center"}
+            align={"center"}
+            direction={"column"}
+            w={"100%"}
+          >
+            <Text size="sm" fw={600}>
+              {timeLeft !== 0 ? (
+                <Flex gap={3} justify={"center"} align={"center"} w={"100%"}>
+                  <IconHourglassHigh color="teal" />
+                  <Text fw={500}>Código expira em </Text>
+                  <Text color="teal" fw={600}>
+                    {formatTime(timeLeft)}
+                  </Text>
+                </Flex>
+              ) : (
+                <Flex
+                  gap={"xs"}
+                  justify={"center"}
+                  align={"center"}
+                  direction={"column"}
+                >
+                  <Flex direction={"row"} gap={2}>
+                    <IconHourglassOff color="red" size={20} />
+                    <Text fw={700} color="red" size="sm">
+                      Código expirado
+                    </Text>
+                  </Flex>
+                  <Text size="xs">Efetue a compra novamente</Text>
+                </Flex>
+              )}
+            </Text>
+            <Progress
+              style={timeLeft === 0 && { visibility: "hidden" }}
+              w={"100%"}
+              value={percentage}
+              color={progressColor}
+            />
           </Flex>
         </Flex>
       </Modal>
@@ -416,6 +513,24 @@ const FinalizePurchase = () => {
     </motion.div>
   ));
 
+  const handleSubmit = () => {
+    const errors = adress_form.validate();
+
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
+
+    setFinalizePurchase(true);
+    setTimeout(() => {
+      if (paymentMethod === "PIX") {
+        setPixModal(true);
+      } else if (paymentMethod === "Boleto Bancário") {
+        setTicketModal(true);
+      }
+      setFinalizePurchase(false);
+    }, 2000);
+  };
+
   return (
     <DefaultView>
       {/* <DefaultTitle title="Finalizar pedido" /> */}
@@ -488,46 +603,58 @@ const FinalizePurchase = () => {
             <SimpleGrid cols={isMobile ? 1 : 3}>
               <TextInput
                 {...adress_form.getInputProps("cep")}
+                key={adress_form.key("cep")}
                 value={adress_form.values.cep}
                 label="CEP"
                 rightSection={cepLoading && <Loader size={"xs"} mr={20} />}
                 disabled={cepLoading}
-                error={cepError && "CEP inválido"}
+                error={adress_form.errors.cep || (cepError && "CEP inválido")}
                 maxLength={8}
                 onBlur={(e) => {
                   handleCepChange(e.target.value);
                 }}
-                hideControls
               />
               <TextInput
                 label="Estado"
                 {...adress_form.getInputProps("state")}
+                key={adress_form.key("state")}
                 disabled={cepLoading}
+                error={adress_form.errors.state}
               />
               <TextInput
                 label="Cidade"
                 {...adress_form.getInputProps("city")}
+                key={adress_form.key("city")}
                 disabled={cepLoading}
+                error={adress_form.errors.city}
               />
               <TextInput
                 label="Rua"
                 {...adress_form.getInputProps("street")}
+                key={adress_form.key("street")}
                 disabled={cepLoading}
+                error={adress_form.errors.street}
               />
               <TextInput
                 label="Bairro"
                 {...adress_form.getInputProps("district")}
+                key={adress_form.key("district")}
                 disabled={cepLoading}
+                error={adress_form.errors.district}
               />
               <TextInput
                 label="Número"
                 {...adress_form.getInputProps("number")}
+                key={adress_form.key("number")}
                 disabled={cepLoading}
+                error={adress_form.errors.number}
               />
               <TextInput
                 label="Complemento"
                 {...adress_form.getInputProps("complement")}
+                key={adress_form.key("complement")}
                 disabled={cepLoading}
+                error={adress_form.errors.complement}
               />
             </SimpleGrid>
           </Card>
@@ -544,13 +671,11 @@ const FinalizePurchase = () => {
             <Button
               w={140}
               h={45}
+              loading={FinalizePurchase}
               color="orange"
               onClick={() => {
-                if (paymentMethod === "PIX") {
-                  setPixModal(true);
-                } else if (paymentMethod === "Boleto Bancário") {
-                  setTicketModal(true);
-                }
+                adress_form.onSubmit(handleSubmit)(); // Execute a submissão do formulário
+                setFinishPayment(true);
               }}
             >
               Continuar
@@ -590,7 +715,9 @@ const FinalizePurchase = () => {
                   withArrow
                   label={
                     <Flex direction={"column"}>
-                      <Text size="xs">{product?.map((item) => item?.name).join(', ')}</Text>
+                      <Text size="xs">
+                        {product?.map((item) => item?.name).join(", ")}
+                      </Text>
                     </Flex>
                   }
                 >
