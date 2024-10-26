@@ -12,10 +12,7 @@ const PromotionLayout = () => {
     }
     return arr;
   }
-
-  console.log(product);
   
-
   return (
     <Flex direction={"column"} gap={30} px={50}>
       <DividerTextComponent title="PROMOÇÕES" />
