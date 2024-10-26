@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   Divider,
+  em,
   Flex,
   Group,
   Image,
@@ -20,11 +21,13 @@ import { useState } from "react";
 import { formatCEP } from "../../utils/cep-formatter";
 import { useNavigate } from "react-router-dom";
 import classes from "./FinalizePurchase.module.css"
+import { useMediaQuery } from "@mantine/hooks";
 
 const FinalizePurchase = () => {
   const navigate = useNavigate();
   const [cepLoading, setCepLoading] = useState(false);
   const [cepError, setCepError] = useState(false);
+  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
   const adress_form = useForm({
     initialValues: {
@@ -95,12 +98,12 @@ const FinalizePurchase = () => {
           <Flex justify={"start"}>
             <DefaultTitle title="Forma de pagamento" />
           </Flex>
-          <Card withBorder h={120}>
+          <Card withBorder h={120} className={classes.cards_payment_container}>
             <Flex
               w={"100%"}
               justify={"center"}
               align={"center"}
-              direction={"row"}
+              className={classes.cards_payment_container_v2}
               gap={"md"}
             >
               <Radio.Card w={"100%"} p={10} value="card">
@@ -147,7 +150,7 @@ const FinalizePurchase = () => {
             <DefaultTitle title="Endereço de entrega" />
           </Flex>
           <Card withBorder w>
-            <SimpleGrid cols={3}>
+            <SimpleGrid cols={isMobile ? 1 : 3}>
               <TextInput
                 {...adress_form.getInputProps("cep")}
                 value={adress_form.values.cep}
@@ -208,7 +211,7 @@ const FinalizePurchase = () => {
             </Button>
           </Flex>
         </Flex>
-        <Flex direction={"column"} w={"70%"} align={"start"} gap={"md"}  className={classes.cards}>
+        <Flex direction={"column"} w={"70%"} align={"start"} gap={"md"} className={classes.cards} mt={isMobile ? "xl" : ""}>
           <DefaultTitle title={"Resumo da compra"} />
           <Card withBorder w={"100%"}>
             <Flex justify={"space-between"} w={"100%"}>

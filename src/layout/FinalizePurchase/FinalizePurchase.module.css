@@ -6,4 +6,13 @@
   .cards {
     width: 100% !important;
   }
+
+  .cards_payment_container {
+    height: 210px !important;
+    
+  }
+
+  .cards_payment_container_v2{
+    flex-direction: column;
+  }
 }
