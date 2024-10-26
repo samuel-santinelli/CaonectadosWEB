@@ -4,11 +4,11 @@ import classes from "./MobileNavbar.module.css";
 import DiscountHeaderLayout from "../DiscountHeader/DiscountHeaderLayout";
 import HeaderLayout from "../Header/Header";
 import Content from "../Content";
-import { useNavigate } from "react-router-dom";
+import { useHandleNavigate } from "../../services/navigate";
 
 export function DefaultLayout() {
   const [opened, { toggle }] = useDisclosure();
-  const navigate = useNavigate();
+  const { handleNavigate } = useHandleNavigate();
 
   return (
     <AppShell
@@ -30,7 +30,7 @@ export function DefaultLayout() {
             <Group ml="xl" gap={0} visibleFrom="sm">
               <UnstyledButton
                 className={classes.control}
-                onClick={() => navigate("/")}
+                onClick={() => handleNavigate("/")}
               >
                 Home
               </UnstyledButton>
@@ -54,7 +54,7 @@ export function DefaultLayout() {
       <AppShell.Navbar py="md" px={4}>
         <UnstyledButton
           className={classes.control}
-          onClick={() => navigate("/")}
+          onClick={() => handleNavigate("/")}
         >
           Home
         </UnstyledButton>
