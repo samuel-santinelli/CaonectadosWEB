@@ -49,13 +49,14 @@ const FinalizePurchase = () => {
   const [cepLoading, setCepLoading] = useState(false);
   const [cepError, setCepError] = useState(false);
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
-  const [, setCreditCard] = useState(false);
+  const [creditCard, setCreditCard] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [cardLoading, setCardLoading] = useState(false);
   const [pixModal, setPixModal] = useState(false);
   const [ticketModal, setTicketModal] = useState(false);
   const [FinalizePurchase, setFinalizePurchase] = useState(false);
   const [finishPayment, setFinishPayment] = useState(false);
+  const [creditCardModal, setCreditCardModal] = useState(false);
 
   const adress_form = useForm({
     initialValues: {
@@ -69,10 +70,7 @@ const FinalizePurchase = () => {
     },
 
     validate: {
-      cep: (value) =>
-        value.length === 0
-          ? "CEP é obrigatório"
-          : null,
+      cep: (value) => (value.length === 0 ? "CEP é obrigatório" : null),
       street: (value) => (value.length === 0 ? "Rua é obrigatória" : null),
       district: (value) => (value.length === 0 ? "Bairro é obrigatório" : null),
       number: (value) =>
@@ -85,8 +83,6 @@ const FinalizePurchase = () => {
       city: (value) => (value.length === 0 ? "Cidade é obrigatória" : null),
     },
   });
-
-  console.log(adress_form);
   const handleCepChange = async (cep) => {
     const cleanCep = cep.replace(/\D/g, "");
     if (cleanCep.length === 8) {
@@ -193,6 +189,12 @@ const FinalizePurchase = () => {
   const handleInputFocus = (e) => {
     setState((prevState) => ({ ...prevState, focus: e.target.name }));
   };
+
+  useEffect(() => {
+    if (isMobile && paymentMethod === "Cartão") {
+      setCreditCardModal(true);
+    }
+  }, [isMobile, paymentMethod]);
 
   const cards = data.map((item) => (
     <motion.div
@@ -383,7 +385,7 @@ const FinalizePurchase = () => {
         w={"100%"}
         style={{
           height:
-            item.title === "Cartão" && paymentMethod === "Cartão"
+            item.title === "Cartão" && paymentMethod === "Cartão" && !isMobile
               ? 300
               : "auto",
         }}
@@ -409,103 +411,213 @@ const FinalizePurchase = () => {
           </Flex>
           {paymentMethod === "Cartão" && item.title === "Cartão" && (
             <Flex gap={"xl"}>
-              <Cards
-                number={state.number}
-                expiry={state.expiry}
-                cvc={state.cvc}
-                name={state.name}
-                focused={state.focus}
-                placeholders={{
-                  name: "Seu nome",
-                }}
-              />
-              <Flex direction={"column"} gap={"xs"}>
-                <ReactInputMask
-                  mask="9999 9999 9999 9999"
-                  value={state.number}
-                  onChange={handleInputChange}
-                  onFocus={handleInputFocus}
-                  w={"100%"}
+              {isMobile ? (
+                <Modal
+                  opened={creditCardModal}
+                  onClose={() => setCreditCardModal(false)}
+                  centered
                 >
-                  {(inputProps) => (
-                    <TextInput
-                      {...inputProps}
-                      type="text"
-                      name="number"
-                      placeholder="Número do cartão"
+                  <Flex gap={"md"} direction={"column"}>
+                    <Cards
+                      number={state.number}
+                      expiry={state.expiry}
+                      cvc={state.cvc}
+                      name={state.name}
+                      focused={state.focus}
+                      placeholders={{
+                        name: "Seu nome",
+                      }}
                     />
-                  )}
-                </ReactInputMask>
-                <TextInput
-                  type="text"
-                  name="name"
-                  placeholder="Seu nome"
-                  value={state.name}
-                  onChange={handleInputChange}
-                  onFocus={handleInputFocus}
-                />
-                <Flex gap={"xs"}>
-                  <ReactInputMask
-                    mask="99/99"
-                    value={state.expiry}
-                    onChange={handleInputChange}
-                    onFocus={handleInputFocus}
-                  >
-                    {(inputProps) => (
+                    <Flex direction={"column"} gap={"xs"}>
+                      <ReactInputMask
+                        mask="9999 9999 9999 9999"
+                        value={state.number}
+                        onChange={handleInputChange}
+                        onFocus={handleInputFocus}
+                        w={"100%"}
+                      >
+                        {(inputProps) => (
+                          <TextInput
+                            {...inputProps}
+                            type="text"
+                            name="number"
+                            placeholder="Número do cartão"
+                          />
+                        )}
+                      </ReactInputMask>
                       <TextInput
-                        {...inputProps}
                         type="text"
-                        name="expiry"
-                        placeholder="MM/YY Expiração"
+                        name="name"
+                        placeholder="Seu nome"
+                        value={state.name}
+                        onChange={handleInputChange}
+                        onFocus={handleInputFocus}
                       />
-                    )}
-                  </ReactInputMask>
-                  <ReactInputMask
-                    mask="999"
-                    value={state.cvc}
-                    onChange={handleInputChange}
-                    onFocus={handleInputFocus}
-                  >
-                    {(inputProps) => (
-                      <TextInput
-                        {...inputProps}
-                        type="text"
-                        name="cvc"
-                        placeholder="CVC"
-                      />
-                    )}
-                  </ReactInputMask>
-                </Flex>
-                <Flex gap={"md"} justify={"end"} mt={"xs"}>
-                  <Button
-                    variant="outline"
-                    color="orange"
-                    onClick={() =>
-                      setState({
-                        number: "",
-                        expiry: "",
-                        cvc: "",
-                        name: "",
-                        focus: "",
-                      })
-                    }
-                  >
-                    Limpar
-                  </Button>
-                  <Button
-                    color="orange"
-                    loading={cardLoading}
-                    onClick={() => {
-                      setCardLoading(true);
-                      setTimeout(() => {
-                        setCardLoading(false);
-                      }, 1000);
+                      <Flex gap={"xs"}>
+                        <ReactInputMask
+                          mask="99/99"
+                          value={state.expiry}
+                          onChange={handleInputChange}
+                          onFocus={handleInputFocus}
+                        >
+                          {(inputProps) => (
+                            <TextInput
+                              {...inputProps}
+                              type="text"
+                              name="expiry"
+                              placeholder="MM/YY Expiração"
+                            />
+                          )}
+                        </ReactInputMask>
+                        <ReactInputMask
+                          mask="999"
+                          value={state.cvc}
+                          onChange={handleInputChange}
+                          onFocus={handleInputFocus}
+                        >
+                          {(inputProps) => (
+                            <TextInput
+                              {...inputProps}
+                              type="text"
+                              name="cvc"
+                              placeholder="CVC"
+                            />
+                          )}
+                        </ReactInputMask>
+                      </Flex>
+                      <Flex gap={"md"} justify={"end"} mt={"xs"}>
+                        <Button
+                          variant="outline"
+                          color="orange"
+                          onClick={() =>
+                            setState({
+                              number: "",
+                              expiry: "",
+                              cvc: "",
+                              name: "",
+                              focus: "",
+                            })
+                          }
+                        >
+                          Limpar
+                        </Button>
+                        <Button
+                          color="orange"
+                          loading={cardLoading}
+                          onClick={() => {
+                            setCardLoading(true);
+                            setTimeout(() => {
+                              setCardLoading(false);
+                            }, 1000);
+                          }}
+                        >
+                          Salvar
+                        </Button>
+                      </Flex>
+                    </Flex>
+                  </Flex>
+                </Modal>
+              ) : (
+                <Flex gap={"md"}>
+                  <Cards
+                    number={state.number}
+                    expiry={state.expiry}
+                    cvc={state.cvc}
+                    name={state.name}
+                    focused={state.focus}
+                    placeholders={{
+                      name: "Seu nome",
                     }}
-                  >
-                    Salvar
-                  </Button>
+                  />
+                  <Flex direction={"column"} gap={"xs"}>
+                    <ReactInputMask
+                      mask="9999 9999 9999 9999"
+                      value={state.number}
+                      onChange={handleInputChange}
+                      onFocus={handleInputFocus}
+                      w={"100%"}
+                    >
+                      {(inputProps) => (
+                        <TextInput
+                          {...inputProps}
+                          type="text"
+                          name="number"
+                          placeholder="Número do cartão"
+                        />
+                      )}
+                    </ReactInputMask>
+                    <TextInput
+                      type="text"
+                      name="name"
+                      placeholder="Seu nome"
+                      value={state.name}
+                      onChange={handleInputChange}
+                      onFocus={handleInputFocus}
+                    />
+                    <Flex gap={"xs"}>
+                      <ReactInputMask
+                        mask="99/99"
+                        value={state.expiry}
+                        onChange={handleInputChange}
+                        onFocus={handleInputFocus}
+                      >
+                        {(inputProps) => (
+                          <TextInput
+                            {...inputProps}
+                            type="text"
+                            name="expiry"
+                            placeholder="MM/YY Expiração"
+                          />
+                        )}
+                      </ReactInputMask>
+                      <ReactInputMask
+                        mask="999"
+                        value={state.cvc}
+                        onChange={handleInputChange}
+                        onFocus={handleInputFocus}
+                      >
+                        {(inputProps) => (
+                          <TextInput
+                            {...inputProps}
+                            type="text"
+                            name="cvc"
+                            placeholder="CVC"
+                          />
+                        )}
+                      </ReactInputMask>
+                    </Flex>
+                    <Flex gap={"md"} justify={"end"} mt={"xs"}>
+                      <Button
+                        variant="outline"
+                        color="orange"
+                        onClick={() =>
+                          setState({
+                            number: "",
+                            expiry: "",
+                            cvc: "",
+                            name: "",
+                            focus: "",
+                          })
+                        }
+                      >
+                        Limpar
+                      </Button>
+                      <Button
+                        color="orange"
+                        loading={cardLoading}
+                        onClick={() => {
+                          setCardLoading(true);
+                          setTimeout(() => {
+                            setCardLoading(false);
+                          }, 1000);
+                        }}
+                      >
+                        Salvar
+                      </Button>
+                    </Flex>
+                  </Flex>
                 </Flex>
-              </Flex>
+              )}
             </Flex>
           )}
         </Flex>
