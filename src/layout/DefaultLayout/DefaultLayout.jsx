@@ -5,10 +5,12 @@ import DiscountHeaderLayout from "../DiscountHeader/DiscountHeaderLayout";
 import HeaderLayout from "../Header/Header";
 import Content from "../Content";
 import { useHandleNavigate } from "../../services/navigate";
+import { useNavigate } from "react-router-dom";
 
 export function DefaultLayout() {
   const [opened, { toggle }] = useDisclosure();
   const { handleNavigate } = useHandleNavigate();
+  const navigate = useNavigate();
 
   return (
     <AppShell
@@ -34,10 +36,10 @@ export function DefaultLayout() {
               >
                 Home
               </UnstyledButton>
-              <UnstyledButton className={classes.control}>
+              <UnstyledButton className={classes.control} onClick={() => navigate("/user-register")}>
                 Cadastro de usuários
               </UnstyledButton>
-              <UnstyledButton className={classes.control}>
+              <UnstyledButton className={classes.control} onClick={() => navigate("/product-register")}>
                 Cadastro de produtos
               </UnstyledButton>
               <UnstyledButton className={classes.control}>

@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { DefaultLayout } from "./DefaultLayout/DefaultLayout";
 import DashboardLayout from "./Dashboard/DashboardLayout";
 import FinalizePurchase from "./FinalizePurchase/FinalizePurchase";
+import RegisterProduct from "./RegisterProduct/RegisterProduct";
 
 const Content = () => {
   const routes = [
@@ -19,6 +20,11 @@ const Content = () => {
       path: "/buy",
       name: "Finalize Purchase View",
       element: <FinalizePurchase />,
+    },
+    {
+      path: "/product-register",
+      name: "Register Product View",
+      element: <RegisterProduct />,
     },
   ];
 

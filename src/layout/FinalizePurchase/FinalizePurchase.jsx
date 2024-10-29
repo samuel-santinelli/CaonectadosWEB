@@ -83,6 +83,53 @@ const FinalizePurchase = () => {
       city: (value) => (value.length === 0 ? "Cidade é obrigatória" : null),
     },
   });
+
+  
+
+  const credit_form = useForm({
+    initialValues: {
+      number: "",
+      person_name: "",
+      expiration_date: "",
+      cvc: "",
+    },
+    validate: {
+      number: (value) => (value.length < 16 ? "Número inválido" : null),
+      person_name: (value) => typeof(value) === "number" || value === "" ? "Nome inválido" : "",
+      expiration_date: (value) => {
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        const currentMonth = currentDate.getMonth() + 1;
+
+        const regex = /^(0[1-9]|1[0-2])\/\d{4}$/;
+        if (!regex.test(value)) {
+          return "Formato inválido. Use MM/AAAA.";
+        }
+  
+        const [month, year] = value.split("/").map(Number);
+  
+
+        if (year < currentYear) {
+          return "O ano não pode ser menor que o atual.";
+        }
+  
+
+        if (month < 1 || month > 12) {
+          return "O mês deve estar entre 01 e 12.";
+        }
+
+        if (year === currentYear && month < currentMonth) {
+          return "O mês não pode ser anterior ao mês atual.";
+        }
+  
+        return null;
+      },    
+    }
+  })
+
+  
+
+
   const handleCepChange = async (cep) => {
     const cleanCep = cep.replace(/\D/g, "");
     if (cleanCep.length === 8) {
@@ -107,13 +154,12 @@ const FinalizePurchase = () => {
           state: data.estado,
           city: data.localidade,
           complement: data.complemento || "",
-          number: "", // Deixe o número em branco para o usuário preencher
+          number: "", 
         });
         setCepLoading(false);
       } catch (error) {
         return false;
       } finally {
-        // Certifique-se de que o loading é definido como false no final da requisição
         setCepLoading(false);
       }
     }
@@ -180,7 +226,7 @@ const FinalizePurchase = () => {
     name: "",
     focus: "",
   });
-
+  console.log(state.expiry);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setState((prevState) => ({ ...prevState, [name]: value }));
@@ -296,7 +342,7 @@ const FinalizePurchase = () => {
           <Text size="sm">Escaneie esse QR code no app do seu banco</Text>
           <QRCode
             size={256}
-            style={{ height: "auto", maxWidth: "70%", width: "100%" }}
+            style={{ height: "auto", maxWidth: "50%", width: "100%" }}
             value="131231"
             viewBox={`0 0 256 256`}
           />
@@ -434,6 +480,7 @@ const FinalizePurchase = () => {
                         value={state.number}
                         onChange={handleInputChange}
                         onFocus={handleInputFocus}
+                        {...credit_form.getInputProps("number")}
                         w={"100%"}
                       >
                         {(inputProps) => (
@@ -442,6 +489,7 @@ const FinalizePurchase = () => {
                             type="text"
                             name="number"
                             placeholder="Número do cartão"
+                            {...credit_form.getInputProps("number")}
                           />
                         )}
                       </ReactInputMask>
@@ -451,6 +499,7 @@ const FinalizePurchase = () => {
                         placeholder="Seu nome"
                         value={state.name}
                         onChange={handleInputChange}
+                        {...credit_form.getInputProps("person_name")}
                         onFocus={handleInputFocus}
                       />
                       <Flex gap={"xs"}>
@@ -459,6 +508,7 @@ const FinalizePurchase = () => {
                           value={state.expiry}
                           onChange={handleInputChange}
                           onFocus={handleInputFocus}
+                          {...credit_form.getInputProps("expiration_date")}
                         >
                           {(inputProps) => (
                             <TextInput
@@ -474,6 +524,7 @@ const FinalizePurchase = () => {
                           value={state.cvc}
                           onChange={handleInputChange}
                           onFocus={handleInputFocus}
+                          {...credit_form.getInputProps("cvc")}
                         >
                           {(inputProps) => (
                             <TextInput
@@ -628,7 +679,9 @@ const FinalizePurchase = () => {
   const handleSubmit = () => {
     const errors = adress_form.validate();
 
-    if (Object.keys(errors).length > 0) {
+    if (errors.hasErrors) {
+      console.log(errors);
+      
       return;
     }
 
@@ -786,7 +839,7 @@ const FinalizePurchase = () => {
               loading={FinalizePurchase}
               color="orange"
               onClick={() => {
-                adress_form.onSubmit(handleSubmit)(); // Execute a submissão do formulário
+                adress_form.onSubmit(handleSubmit)();
                 setFinishPayment(true);
               }}
             >

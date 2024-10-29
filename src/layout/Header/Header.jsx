@@ -298,7 +298,7 @@ const HeaderLayout = () => {
                 h={50}
                 onClick={() => {
                   handleSaveData({
-                    price: "100.00", // Substitua por valores reais ou de um estado
+                    price: "100.00",
                     freight: "15.00",
                     discount_coupon: "10.00",
                     coupon_code: "PROMO2024",
@@ -311,7 +311,7 @@ const HeaderLayout = () => {
             </Flex>
           </Card>
         </Flex>
-        <Flex direction={"column"} gap={"sm"} my={"lg"} w={"62.5%"} className={classes.freight_card}>
+        <Flex direction={"column"} gap={"sm"} my={"lg"} className={classes.freight_card}>
           <Flex direction={"row"} justify={"space-between"}>
             <Text fw={500}>Frete</Text>
             <Text fw={600} color="green">
@@ -320,7 +320,7 @@ const HeaderLayout = () => {
           </Flex>
           <Divider />
           <Flex justify={"space-between"} align={"center"} gap={"xs"}>
-            <Progress color="green" value={100} w={"87%"} className={classes.progress_card} />
+            <Progress color="green" value={100} w={"90%"} className={classes.progress_card} />
             <Text size="xs" color="green" fw={600}>
               Frete grátis
             </Text>
