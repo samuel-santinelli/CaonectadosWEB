@@ -233,7 +233,7 @@ const HeaderLayout = () => {
               >
                 <TextInput
                   placeholder="Inserir código do cupom"
-                  leftSection={<IconTicket color="#FF8C00" />}
+                  leftSection={<IconTicket color="#FF8C00" />}                  
                   size="md"
                   error={
                     discountCouponError ? (
@@ -247,7 +247,7 @@ const HeaderLayout = () => {
                       false
                     )
                   }
-                  onChange={(e) => setDiscountCoupon(e.target.value)}
+                  onChange={(e) => setDiscountCoupon(e.target.value.toUpperCase())}
                   value={discountCoupon}
                   onKeyUp={(e) => {
                     if (e.key === "Enter") {
