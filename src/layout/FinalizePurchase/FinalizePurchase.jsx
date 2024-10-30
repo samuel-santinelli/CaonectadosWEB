@@ -226,7 +226,7 @@ const FinalizePurchase = () => {
     name: "",
     focus: "",
   });
-  console.log(state.expiry);
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setState((prevState) => ({ ...prevState, [name]: value }));
