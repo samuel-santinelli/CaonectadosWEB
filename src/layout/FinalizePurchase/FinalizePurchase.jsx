@@ -128,8 +128,6 @@ const FinalizePurchase = () => {
   })
 
   
-
-
   const handleCepChange = async (cep) => {
     const cleanCep = cep.replace(/\D/g, "");
     if (cleanCep.length === 8) {
