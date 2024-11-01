@@ -679,9 +679,7 @@ const FinalizePurchase = () => {
   const handleSubmit = () => {
     const errors = adress_form.validate();
 
-    if (errors.hasErrors) {
-      console.log(errors);
-      
+    if (errors.hasErrors) {            
       return;
     }
 
