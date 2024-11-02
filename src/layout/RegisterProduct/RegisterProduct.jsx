@@ -34,8 +34,7 @@ const RegisterProduct = () => {
       setProducts((prevProdutos) =>
         prevProdutos.filter((p) => p.id !== produto.id)
       );
-    } catch (error) {
-      console.error("Erro ao excluir o produto:", error);
+    } catch (error) {      
       setError("No momento não há nenhum produto cadastrado");
     }
   };
