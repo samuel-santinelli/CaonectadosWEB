@@ -8,8 +8,7 @@ export const getProducts = async () => {
   try {
     const response = await api.get('/produto');
     return response.data;
-  } catch (error) {
-    console.error("Erro ao buscar produtos:", error);
+  } catch (error) {    
     throw error;
   }
 };
