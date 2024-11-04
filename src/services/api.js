@@ -25,6 +25,5 @@ export const deleteProduct = async (id, productData) => {
       throw error;
     }
   };
-  
 
 export default api;
