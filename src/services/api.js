@@ -21,8 +21,7 @@ export const deleteProduct = async (id, productData) => {
         },
         data: productData
       });
-    } catch (error) {
-      console.error("Erro ao excluir produto:", error);
+    } catch (error) {      
       throw error;
     }
   };
